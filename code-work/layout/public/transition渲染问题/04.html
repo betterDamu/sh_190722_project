@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #wrap{
+            width: 300px;
+            height: 300px;
+            border: 1px solid;
+
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        #app{
+            border: 1px solid;
+            background: pink;
+
+            position: absolute;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+
+            width: 100px;
+            height: 100px;
+            transition-property: width;
+            transition-duration:2s ;
+        }
+
+    </style>
+</head>
+<body>
+<div id="wrap">
+
+</div>
+</body>
+<script>
+    /*js引擎的执行 会 阻塞 页面的渲染
+        js引擎有能力修改dom结构   body.innerHTML="";*/
+    //在元素首次渲染还没有成功的情况下 过渡不会被触发
+    window.onload=function () {
+        //页面完全加载成功
+        var wrap = document.querySelector("#wrap");
+        var app = document.createElement("div");
+        app.id="app";
+        wrap.appendChild(app);
+
+        //app的首次渲染有没有成功？  没有成功！！！
+        setTimeout(function () {
+            app.style.width = "250px";
+        },100)
+    }
+</script>
+</html>

@@ -26,7 +26,7 @@ export default {
         const body = await $http.msite.getCategories()
         if(body.code===OK){
             store.commit(GETCATEGORIES,body.data)
-            typeof cb === "function" && cb()
+            //typeof cb === "function" && cb()
         }
     }
 }

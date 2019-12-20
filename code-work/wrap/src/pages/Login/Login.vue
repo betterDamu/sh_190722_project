@@ -5,16 +5,21 @@
                 <div class="login_header">
                     <h2 class="login_logo">硅谷外卖</h2>
                     <div class="login_header_title">
-                        <a href="javascript:;" class="on">短信登录</a>
-                        <a href="javascript:;">密码登录</a>
+                        <a href="javascript:;" :class="{on:loginWay===`message`}"
+                            @click="loginWay = `message`">短信登录</a>
+                        <a href="javascript:;" :class="{on:loginWay===`password`}"
+                           @click="loginWay = `password`">密码登录</a>
                     </div>
                 </div>
                 <div class="login_content">
                     <form>
-                        <div class="on">
+                        <div :class="{on:loginWay===`message`}">
                             <section class="login_message">
-                                <input type="tel" maxlength="11" placeholder="手机号">
-                                <button disabled="disabled" class="get_verification">获取验证码</button>
+                                <input v-model.trim="phoneNumber" type="tel" maxlength="11" placeholder="手机号">
+                                <button :disabled="!isRightPhoneNum || (times>0)" class="get_verification"
+                                    :class="{hightLight:isRightPhoneNum}" @click.prevent="getCode">
+                                    {{times>0?`验证码已发送(${times}s)`:`获取验证码`}}
+                                </button>
                             </section>
                             <section class="login_verification">
                                 <input type="tel" maxlength="8" placeholder="验证码">
@@ -24,16 +29,16 @@
                                 <a href="javascript:;">《用户服务协议》</a>
                             </section>
                         </div>
-                        <div>
+                        <div :class="{on:loginWay===`password`}">
                             <section>
                                 <section class="login_message">
                                     <input type="tel" maxlength="11" placeholder="手机/邮箱/用户名">
                                 </section>
                                 <section class="login_verification">
-                                    <input type="tel" maxlength="8" placeholder="密码">
-                                    <div class="switch_button off">
-                                        <div class="switch_circle"></div>
-                                        <span class="switch_text">...</span>
+                                    <input :type="right?`text`:`password`"  maxlength="8" placeholder="密码">
+                                    <div class="switch_button" :class="right?`on`:`off`" @click="right=!right">
+                                        <div class="switch_circle" :class="{right:right}"></div>
+                                        <span class="switch_text">abc</span>
                                     </div>
                                 </section>
                                 <section class="login_message">
@@ -55,8 +60,46 @@
 </template>
 
 <script>
+    /*
+        1. 登录方式的切换
+        2. 获取验证码点亮
+        3. 倒计时
+        4. 密码的显示隐藏
+        5. 表单验证
+    */
     export default {
-        name: "Login"
+        name: "Login",
+        data(){
+            return {
+                loginWay:"message", //message ; password
+                reg_phone:/^15851802713$/igm,
+                phoneNumber:"",
+                times:0,
+                right:false
+            }
+        },
+        computed:{
+            isRightPhoneNum(){
+                return this.reg_phone.test(this.phoneNumber)
+            }
+        },
+        methods:{
+            getCode(){
+                clearInterval(this.timer)
+                //倒计时
+                this.times = 10;
+                this.timer = setInterval(()=>{
+                    if(this.times>0){
+                        this.times -- ;
+                    }else {
+                        clearInterval(this.timer)
+                    }
+                },1000)
+            }
+        },
+        destroyed(){
+            clearInterval(this.timer)
+        }
     }
 </script>
 
@@ -128,6 +171,9 @@
                                         color #ccc
                                         font-size 14px
                                         background transparent
+                                        &.hightLight
+                                            color  green
+                                            font-weight 700
                                 .login_verification
                                     position relative
                                     margin-top 16px
@@ -156,7 +202,6 @@
                                         &.on
                                             background #02a774
                                         >.switch_circle
-                                            //transform translateX(27px)
                                             position absolute
                                             top -1px
                                             left -1px
@@ -167,6 +212,8 @@
                                             background #fff
                                             box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
                                             transition transform .3s
+                                            &.right
+                                                transform translateX(27px)
                                 .login_hint
                                     margin-top 12px
                                     color #999

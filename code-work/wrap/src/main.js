@@ -5,6 +5,7 @@ import router from "@/router"
 import http from "@/api"
 import store from "@/store"
 
+import "./validate"
 
 
 Vue.prototype.$http = http

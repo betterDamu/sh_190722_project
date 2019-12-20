@@ -108,6 +108,17 @@
                     this.flod = true
                     return false
                 }
+
+                if(!this.scroll){
+                    this.scroll = new BScroll(this.$refs.shopCartListContent,{
+                        click:true
+                    })
+                }else {
+                    this.scroll.refresh()
+                }
+
+
+
                 return !this.flod
             }
         },
@@ -179,10 +190,6 @@
         mounted(){
             PubSub.subscribe(PubSubConfig.ballAnimation,(msg,target)=>{
                this.drop(target)
-            });
-            console.log(this.$refs.shopCartListContent)
-            new BScroll(this.$refs.shopCartListContent,{
-                click:true
             })
         }
     }

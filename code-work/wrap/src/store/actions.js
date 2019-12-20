@@ -22,10 +22,11 @@ export default {
             store.commit(GETSHOPS,body.data)
         }
     },
-    async getCategories(store){
+    async getCategories(store,cb){
         const body = await $http.msite.getCategories()
         if(body.code===OK){
             store.commit(GETCATEGORIES,body.data)
+            typeof cb === "function" && cb()
         }
     }
 }

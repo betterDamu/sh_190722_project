@@ -18,13 +18,13 @@
                 <!--首页导航-->
                 <nav class="msite_nav">
                     <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <a href="javascript:" class="link_to_food">
+                        <div class="swiper-wrapper" >
+                            <div class="swiper-slide" v-for="categoryItem in categoryArr">
+                                <a href="javascript:" v-for="category in categoryItem" class="link_to_food">
                                     <div class="food_container">
-                                        <img src="./images/nav/1.jpg">
+                                        <img :src="baseImgUrl + category.image_url">
                                     </div>
-                                    <span>甜品饮品</span>
+                                    <span>{{category.title}}</span>
                                 </a>
                             </div>
                         </div>
@@ -42,22 +42,50 @@
     import ShopList from "components/ShopList/ShopList"
     import HeaderTop from "components/HeaderTop/HeaderTop"
     import {mapActions,mapState} from "vuex"
+    import _ from "lodash"
+    import Swiper from "swiper"
+    import "swiper/css/swiper.min.css"
     export default {
         name: "Msite",
         computed:{
-            ...mapState(["address","categories"])
+            ...mapState(["address","categories","baseImgUrl"]),
+            categoryArr(){
+                return _.chunk(this.categories,8)
+            }
         },
         methods:{
-            ...mapActions(["getAddress","getCategories"])
+            ...mapActions(["getAddress","getCategories"]),
+            //1. 计算属性 + $nextTick
+            //2. wtach + $nextTick
+            //3. cb + $nextTick
+            //4. promise + 函数调用
+            swiperRender(){
+                // this.$nextTick(()=>{
+                    new Swiper('.swiper-container', {
+                        autoplay: true,
+                        pagination: {
+                            el: '.swiper-pagination',
+                        }
+                    })
+                // })
+            }
         },
         components:{
             ShopList,
             HeaderTop
         },
-        created(){
+        async created(){
             this.getAddress();
-            this.getCategories();
-        }
+            // 每一个action在被执行后 返回的是一个promise
+            // 当前这个promise在vue把数据更新完 界面渲染成功之后才会确定状态
+            await  this.getCategories(this.swiperRender);
+            this.swiperRender()
+        },
+        /*watch:{
+            categories(){
+               this.swiperRender()
+            }
+        }*/
     }
 </script>
 

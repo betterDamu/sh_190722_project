@@ -1,13 +1,30 @@
-import {GETADDRESS,GETSHOPS,GETCATEGORIES,GETUSER} from "./mutation_types"
+import {GETADDRESS,GETSHOPS,GETCATEGORIES,GETUSER,RESTUSER} from "./mutation_types"
 import $http from "@/api"
+import router from "@/router"
+import {Toast} from "vant"
 const OK = 0;
 const ERROR = 1;
 
 
-function loginSuccess(commit,user){
+
+function loginSuccess(commit,user,resetData){
     commit(GETUSER,user)
+    //跳转到个人中心
+    router.replace("/Msite")
+    //清空界面上的登录信息
+    resetData()
 }
-function loginFail(error){}
+function loginFail(error,loginWay,getCaptcha,resetData){
+    Toast.fail("登录失败 请检验参数",{
+        duration:3000
+    })
+    //更新图片验证码(用户名 密码)
+    if(loginWay === "password"){
+        getCaptcha()
+    }
+    //清空界面上的登录信息
+    resetData()
+}
 
 export default {
     async getAddress(store){
@@ -37,7 +54,7 @@ export default {
             //typeof cb === "function" && cb()
         }
     },
-    async getUser({commit},{loginWay,phone,code,name,pwd,captcha}){
+    async getUser({commit},{loginWay,phone,code,name,pwd,captcha,getCaptcha,resetData}){
         let body = ""
         if(loginWay === "message"){
             body = await $http.login.loginSms({
@@ -52,8 +69,12 @@ export default {
             })
         }
 
-        body.code === OK && loginSuccess(commit,body.data)
-        body.code === ERROR && loginFail(body.data)
+        body.code === OK && loginSuccess(commit,body.data,resetData)
+        body.code === ERROR && loginFail(body.data,loginWay,getCaptcha,resetData)
 
+    },
+    resetUser({commit}){
+        commit(RESTUSER)
+        router.replace("/Login")
     }
 }

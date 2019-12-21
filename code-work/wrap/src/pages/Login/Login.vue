@@ -86,9 +86,10 @@
             return {
                 loginWay:"password", //message ; password
                 reg_phone:/^1\d{10}$/igm,
-                phoneNumber:"",
                 times:0,
                 right:false,
+
+                phoneNumber:"",
                 code:"",
                 name:"",
                 pwd:"",
@@ -102,6 +103,13 @@
         },
         methods:{
             ...mapActions(["getUser"]),
+            resetData(){
+                this.phoneNumber="";
+                this.code="";
+                this.name="";
+                this.pwd="";
+                this.captcha="";
+            },
             getCaptcha(){
                 this.$refs.captcha.src= `http://localhost:4000/captcha?time=${new Date().getTime()}`
             },
@@ -135,7 +143,8 @@
                         this.getUser({
                             loginWay:this.loginWay,
                             phone:this.phoneNumber,
-                            code:this.code
+                            code:this.code,
+                            resetData:this.resetData
                         })
                     }
                 }else if(this.loginWay === "password") {
@@ -145,7 +154,9 @@
                             loginWay:this.loginWay,
                             name:this.name,
                             pwd:this.pwd,
-                            captcha:this.captcha
+                            captcha:this.captcha,
+                            getCaptcha:this.getCaptcha,
+                            resetData:this.resetData
                         })
                     }
                 }

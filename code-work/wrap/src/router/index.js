@@ -3,7 +3,6 @@ import Vue from "vue";
 import routes from "@/routes"
 Vue.use(VueRouter);
 
-
 const originalPush = VueRouter.prototype.push
 const originalReplace = VueRouter.prototype.replace
 VueRouter.prototype.push = function push(location) {

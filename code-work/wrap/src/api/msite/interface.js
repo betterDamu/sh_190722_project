@@ -15,5 +15,11 @@ export default {
       method:"get",
       corsUrl:"/4000",
       needToken:true
+  },
+  autoLogin:{
+      url:"/auto_login",
+      method:"get",
+      corsUrl:"/4000",
+      needToken:true
   }
 }

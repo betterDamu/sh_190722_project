@@ -303,7 +303,7 @@
 ## 8、根据会话获取用户信息
 
 #### 请求URL：
-	http://localhost:5000/userinfo
+	http://localhost:5000/auto_login
 
 #### 请求方式：
 	GET

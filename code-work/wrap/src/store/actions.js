@@ -1,4 +1,4 @@
-import {GETADDRESS,GETSHOPS,GETCATEGORIES,GETUSER,RESTUSER} from "./mutation_types"
+import {GETADDRESS,GETSHOPS,GETCATEGORIES,GETUSER,RESTUSER,AUTOLOGIN} from "./mutation_types"
 import $http from "@/api"
 import router from "@/router"
 import {Toast} from "vant"
@@ -80,5 +80,9 @@ export default {
         commit(RESTUSER)
         localStorage.removeItem("ele-token")
         router.replace("/Login")
+    },
+    async autoLogin({commit}){
+        const body = await $http.msite.autoLogin()
+        commit(AUTOLOGIN,body.data)
     }
 }

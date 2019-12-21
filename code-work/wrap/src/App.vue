@@ -6,11 +6,18 @@
 </template>
 
 <script>
+  import {mapActions} from "vuex"
   import FooterGuide from "components/FooterGuide/FooterGuide.vue"
   export default {
     name: 'app',
+    methods:{
+        ...mapActions(["autoLogin"])
+    },
     components:{
         FooterGuide
+    },
+    created(){
+        this.autoLogin()
     }
   }
 </script>

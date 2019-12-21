@@ -1,4 +1,4 @@
-import {GETADDRESS,GETSHOPS,GETCATEGORIES,GETUSER,RESTUSER} from "./mutation_types"
+import {GETADDRESS,GETSHOPS,GETCATEGORIES,GETUSER,RESTUSER,AUTOLOGIN} from "./mutation_types"
 export default {
     [GETADDRESS](state,address){
         state.address = address
@@ -16,5 +16,8 @@ export default {
     [RESTUSER](state){
         state.user = {}
         state.token = ""
+    },
+    [AUTOLOGIN](state,user){
+        state.user = user
     }
 }

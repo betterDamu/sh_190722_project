@@ -1,8 +1,10 @@
 import axios from "axios"
 import store from "@/store"
+import router from "@/router"
+import {Toast} from "vant"
 const axiosObj = axios.create({
   // baseURL:"http://localhost:4000",
-  timeout:15000
+  timeout:1500
 })
 
 axiosObj.interceptors.request.use(function (config) {
@@ -26,7 +28,16 @@ axiosObj.interceptors.request.use(function (config) {
 axiosObj.interceptors.response.use(function (response) {
   return response.data;
 }, function (error) {
-  return Promise.reject(error);
+    Toast({
+        type:"fail",
+        message:    (error.response&&error.response.data&&error.response.data.message)?
+            error.response.data.message : "错了",
+        duration:4000,
+        onClose(){
+            router.replace("/Login")
+        }
+    })
+    return Promise.reject(error);
 });
 
 

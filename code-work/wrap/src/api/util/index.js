@@ -1,7 +1,7 @@
 export default (axiosInstance,interfaceObj)=>{
   const api = {};
   for(name in interfaceObj){
-    let {url,method,isForm,corsUrl} = interfaceObj[name];
+    let {url,method,isForm,corsUrl,needToken} = interfaceObj[name];
 
     api[name]= async (data,config={}) => {
       //data必定是一个js对象
@@ -30,7 +30,10 @@ export default (axiosInstance,interfaceObj)=>{
           res = await axiosInstance({
             url,
             method,
-            params:transformData
+            params:transformData,
+            headers:{
+                needToken
+            }
           });
           break;
         case "post":
@@ -48,7 +51,10 @@ export default (axiosInstance,interfaceObj)=>{
           res = await axiosInstance({
               url,
               method,
-              data:endData
+              data:endData,
+              headers:{
+                  needToken
+              }
           })
           break;
       }

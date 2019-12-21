@@ -5,5 +5,6 @@ export default {
     address: {}, // 地址信息对象
     shops:[],
     categories:[],
-    user:{}
+    user:{},
+    token:localStorage.getItem("ele-token")
 }

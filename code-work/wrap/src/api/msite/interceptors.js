@@ -1,4 +1,5 @@
 import axios from "axios"
+import store from "@/store"
 const axiosObj = axios.create({
   // baseURL:"http://localhost:4000",
   timeout:15000
@@ -9,6 +10,13 @@ axiosObj.interceptors.request.use(function (config) {
         config.url = `${config.url}/${config.params.latitude},${config.params.longitude}`;
         config.params={}
     }
+
+    //判断出哪些接口是需要携带token
+    if(config.headers.needToken){
+        config.headers.Authorization = store.state.token;
+    }
+    delete config.headers.needToken
+
     return config;
 }, function (error) {
   return Promise.reject(error);

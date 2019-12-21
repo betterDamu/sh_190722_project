@@ -10,9 +10,11 @@ export default {
         state.categories = categories
     },
     [GETUSER](state,user){
-        state.user = user
+        state.user = user;
+        state.token = user.token;
     },
     [RESTUSER](state){
         state.user = {}
+        state.token = ""
     }
 }

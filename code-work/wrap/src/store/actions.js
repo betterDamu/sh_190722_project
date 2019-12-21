@@ -8,11 +8,14 @@ const ERROR = 1;
 
 
 function loginSuccess(commit,user,resetData){
+    //将user存到vuex的仓库中
     commit(GETUSER,user)
-    //跳转到个人中心
+    //跳转到主页
     router.replace("/Msite")
     //清空界面上的登录信息
     resetData()
+    //将返回的token进行持久化
+    localStorage.setItem("ele-token",user.token)
 }
 function loginFail(error,loginWay,getCaptcha,resetData){
     Toast.fail("登录失败 请检验参数",{
@@ -75,6 +78,7 @@ export default {
     },
     resetUser({commit}){
         commit(RESTUSER)
+        localStorage.removeItem("ele-token")
         router.replace("/Login")
     }
 }

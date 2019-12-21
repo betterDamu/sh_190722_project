@@ -19,7 +19,7 @@
                                        name="phone" v-validate="`required|mobile`" placeholder="手机号">
                                 <span style="color: red" v-show="errors.has('phone')">{{ errors.first('phone') }}</span>
                                 <button :disabled="!isRightPhoneNum || (times>0)" class="get_verification"
-                                    :class="{hightLight:isRightPhoneNum}" @click.prevent="getCode">
+                                    :class="{hightLight:isRightPhoneNum}" @click.prevent="getCode" >
                                     {{times>0?`验证码已发送(${times}s)`:`获取验证码`}}
                                 </button>
                             </section>
@@ -51,7 +51,7 @@
                                 <section class="login_message">
                                     <input type="text" maxlength="11" placeholder="验证码"
                                            v-model="captcha" name="captcha" v-validate="{required: true,regex: /^[0-9a-zA-Z]{4}$/}">
-                                    <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                                    <img ref="captcha" @click="getCaptcha" class="get_verification" src="http://localhost:4000/captcha" alt="captcha">
                                     <span style="color: red;" v-show="errors.has('captcha')">{{ errors.first('captcha') }}</span>
                                 </section>
                             </section>
@@ -76,12 +76,15 @@
         4. 密码的显示隐藏
         5. 表单验证
     */
+    import { Toast } from 'vant';
+    const OK = 0;
+    const ERROR =1;
     export default {
         name: "Login",
         data(){
             return {
-                loginWay:"message", //message ; password
-                reg_phone:/^15851802713$/igm,
+                loginWay:"password", //message ; password
+                reg_phone:/^1\d{10}$/igm,
                 phoneNumber:"",
                 times:0,
                 right:false,
@@ -97,10 +100,13 @@
             }
         },
         methods:{
-            getCode(){
+            getCaptcha(){
+                this.$refs.captcha.src= `http://localhost:4000/captcha?time=${new Date().getTime()}`
+            },
+            async getCode(){
                 clearInterval(this.timer)
                 //倒计时
-                this.times = 10;
+                this.times = 60;
                 this.timer = setInterval(()=>{
                     if(this.times>0){
                         this.times -- ;
@@ -108,6 +114,17 @@
                         clearInterval(this.timer)
                     }
                 },1000)
+
+                //获取验证码
+                const body = await this.$http.login.sendcode({
+                    phone:this.phoneNumber
+                })
+                if(body.code === OK){
+                    Toast.success('验证码发送成功');
+                }else if(body.code === ERROR){
+                    Toast.fail('验证码发送失败');
+                }
+                this.times = 0;
             },
             async login(){
                 if(this.loginWay === "message"){

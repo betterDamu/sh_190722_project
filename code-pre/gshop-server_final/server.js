@@ -19,9 +19,9 @@ app.use(express.static('public'))
 // 声明使用解析post请求的中间件
 
 // 请求体参数是: name=tom&pwd=123 (pre代码使用)
-app.use(express.urlencoded({extended: true}))
+// app.use(express.urlencoded({extended: true}))
 // 请求体参数是json结构: {name: tom, pwd: 123} (work代码使用)
-// app.use(express.json())
+app.use(express.json())
 
 // 声明使用解析cookie数据的中间件
 const cookieParser = require('cookie-parser')

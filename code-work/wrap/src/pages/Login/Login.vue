@@ -76,6 +76,7 @@
         4. 密码的显示隐藏
         5. 表单验证
     */
+    import {mapActions} from "vuex"
     import { Toast } from 'vant';
     const OK = 0;
     const ERROR =1;
@@ -100,6 +101,7 @@
             }
         },
         methods:{
+            ...mapActions(["getUser"]),
             getCaptcha(){
                 this.$refs.captcha.src= `http://localhost:4000/captcha?time=${new Date().getTime()}`
             },
@@ -130,12 +132,21 @@
                 if(this.loginWay === "message"){
                     const messageFlag = await this.$validator.validateAll(["phone","code"]);
                     if(messageFlag){
-                        console.log("message")
+                        this.getUser({
+                            loginWay:this.loginWay,
+                            phone:this.phoneNumber,
+                            code:this.code
+                        })
                     }
                 }else if(this.loginWay === "password") {
                     const passwordFlag = await this.$validator.validateAll(["name","pwd","captcha"]);
                     if(passwordFlag){
-                        console.log("password")
+                        this.getUser({
+                            loginWay:this.loginWay,
+                            name:this.name,
+                            pwd:this.pwd,
+                            captcha:this.captcha
+                        })
                     }
                 }
             }

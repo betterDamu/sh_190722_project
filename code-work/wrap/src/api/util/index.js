@@ -46,9 +46,9 @@ export default (axiosInstance,interfaceObj)=>{
             endData = Object.assign(transformData,configData)
           }
           res = await axiosInstance({
-            url,
-            method,
-            data:endData
+              url,
+              method,
+              data:endData
           })
           break;
       }

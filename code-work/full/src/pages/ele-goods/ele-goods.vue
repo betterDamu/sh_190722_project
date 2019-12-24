@@ -164,6 +164,7 @@
     .goods
         display flex
         position absolute
+        z-index 0
         left 0
         right 0
         top 174px

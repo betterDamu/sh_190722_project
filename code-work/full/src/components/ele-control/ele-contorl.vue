@@ -1,13 +1,13 @@
 <template>
     <div class="cart-control">
         <transition name="cartControlRemove">
-            <i class="remove icon-remove_circle_outline"
+            <i class="remove damu-remove_circle_outline"
                v-show="food.count>0" @click="removeCount"></i>
         </transition>
         <transition name="cartControlRemove">
             <span class="text" v-show="food.count>0">{{food.count}}</span>
         </transition>
-        <i class="add icon-add_circle" @click="addCount"></i>
+        <i class="add damu-add_circle" @click="addCount"></i>
     </div>
 </template>
 

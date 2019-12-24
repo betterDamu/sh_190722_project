@@ -4,7 +4,7 @@
             <div @click="flodFn" style="will-change: scroll-position" class="left" >
                 <div class="shop-wrap" :class="{highLight:totalPrice >0}">
                     <div class="logo">
-                        <i class="shopping_cart icon-shopping_cart"></i>
+                        <i class="shopping_cart damu-shopping_cart"></i>
                     </div>
                     <span class="qipao" v-show="totalCount >0">{{totalCount}}</span>
                 </div>

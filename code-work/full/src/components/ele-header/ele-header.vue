@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <i class="icon-close close" @click="$router.replace(`/Msite`)"></i>
+        <i class="damu-close close" @click="$router.replace(`/Msite`)"></i>
         <div class="headerTop">
             <img class="avatar" :src="seller.avatar" alt="">
             <div class="content">
@@ -18,7 +18,7 @@
             </div>
             <div class="btn" @click="maskFlag=true" v-if="seller.supports && seller.supports.length">
                 <span class="text" >{{seller.supports.length}}个</span>
-                <i class="icon icon-keyboard_arrow_right"></i>
+                <i class="icon damu-keyboard_arrow_right"></i>
             </div>
         </div>
         <div class="bulletin"  @click="maskFlag=true">
@@ -26,7 +26,7 @@
                 <i class="icon"></i>
                 <span class="text">{{seller.bulletin}}</span>
             </div>
-            <i class="arrow icon-keyboard_arrow_right"></i>
+            <i class="arrow damu-keyboard_arrow_right"></i>
         </div>
         <div class="bg">
             <img :src="seller.avatar" alt="">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="footer">
-                    <i class="close icon-close"  @click="maskFlag=false"></i>
+                    <i class="close damu-close"  @click="maskFlag=false"></i>
                 </div>
             </div>
         </transition>
@@ -83,14 +83,15 @@
     @import "../../common/stylus/mixin.styl"
     .header
         position relative
+        z-index 1
         font-size 0
         background rgba(7,17,27,.5)
         overflow hidden
-        .close
+        & > .close
             color red;
             font-size 25px;
             position absolute;
-            z-index 10
+            z-index 2
             left 3px
             top 3px
         .headerTop

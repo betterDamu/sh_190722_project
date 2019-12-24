@@ -47,8 +47,7 @@ app.get('/test', function (req, res) {
 })
 
 // 在路由器中间之后, 处理所有与路由器中间的路由不匹配的请求
-/*app.use((req, res) => {
-  console.log('--------')
+app.use((req, res) => {
   fs.readFile(__dirname + '/public/index.html', (err, data)=>{
     if(err){
       console.log(err)
@@ -61,7 +60,7 @@ app.get('/test', function (req, res) {
       res.end(data)
     }
   })
-})*/
+})
 
 // 通过mongoose连接数据库
 mongoose.connect('mongodb://localhost/gshop', {useNewUrlParser: true})

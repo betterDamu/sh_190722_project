@@ -146,7 +146,6 @@
             }
         },
         async mounted(){
-            console.log("goods")
             const  {errno,body} = await this.$http.goods.getGoods()
             if(errno === OK){
                 this.goods = body

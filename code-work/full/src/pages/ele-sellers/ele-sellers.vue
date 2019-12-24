@@ -8,7 +8,6 @@
     export default {
         name: "ele-sellers",
         mounted(){
-            console.log("sellers")
         }
     }
 </script>

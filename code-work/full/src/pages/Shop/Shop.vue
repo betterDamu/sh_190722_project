@@ -37,10 +37,15 @@
         },
         async mounted(){
             //根据id去数据库找属于当前商家的数据
+            console.log(this.id,"mounted")
             const data = await this.$http.sellers.getSellers();
             if(data.errno === OK){
                 this.seller = data.body
             }
+        },
+        beforeRouteUpdate (to, from, next) {
+            console.log(to.params.id,"beforeRouteLeave")
+            next()
         }
     }
 </script>

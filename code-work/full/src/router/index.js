@@ -23,7 +23,6 @@ const router = new VueRouter({
 
 //路由守卫(全局前置守卫)
 router.beforeEach(async (to, from, next) => {
-    console.log("全局 前置 beforeEach")
     if(to.path !== '/Login'){
         await store.dispatch("autoLogin")
         if(store.state.login.user._id){
@@ -38,12 +37,9 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.beforeResolve((to, from, next)=>{
-    console.log("全局 解析 beforeResolve")
     next()
 })
 
-router.afterEach((to, from) => {
-    console.log("全局 后置 afterEach")
-})
+router.afterEach((to, from) => {})
 
 export default router

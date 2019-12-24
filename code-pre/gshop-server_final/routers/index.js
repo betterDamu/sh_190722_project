@@ -145,9 +145,8 @@ router.post('/login_sms', function (req, res, next) {
 router.get('/auto_login', function(req, res) {
   // 得到请求头中的token
   const token = req.headers['authorization']
-  
   // 如果请求头中没有token, 直接返回  token=="null"
-  if (token === "null" || token === "undefined") {
+  if (token === "null" || token === "undefined" || token==="") {
     return res.send({code: 1, msg: '请先登陆'})
   }
 

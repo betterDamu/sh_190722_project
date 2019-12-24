@@ -1,3 +1,4 @@
+import store from "@/store"
 import Profile from "pages/Profile/Profile";
 import Msite from "pages/Msite/Msite";
 import Order from "pages/Order/Order";
@@ -19,7 +20,17 @@ export default [
     {path:"/Profile",component:Profile,meta:{showFooter:true}},
     {path:"/Order",component:Order,meta:{showFooter:true}},
     {path:"/Msite",component:Msite,meta:{showFooter:true}},
-    {path:"/Login",component:Login},
+    {
+        path:"/Login",
+                component:Login,
+                beforeEnter: (to, from, next) => {
+                if(store.state.login.user._id){
+                    next("/Msite")
+                }else {
+                    next()
+                }
+        }
+    },
     {path:"/UserDetail",component:UserDetail},
     {
         path:"/Defined",

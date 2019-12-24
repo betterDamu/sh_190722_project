@@ -1,0 +1,27 @@
+bg-image($name)
+  @media screen and (-webkit-device-pixel-ratio:2)
+    background-image url($name+"@2x.png")
+  @media screen and (-webkit-device-pixel-ratio:3)
+    background-image url($name+"@3x.png")
+
+
+one-px($color)
+  position relative
+  &::after
+    content ""
+    display block
+    position absolute
+    bottom 0
+    height 1px
+    width 100%
+    background $color
+    @media screen and (-webkit-device-pixel-ratio:2)
+      transform scaleY(.5)
+    @media screen and (-webkit-device-pixel-ratio:3)
+      transform scaleY(.333333333333333333333333)
+
+
+border-none()
+  &::after
+    content ""
+    display none

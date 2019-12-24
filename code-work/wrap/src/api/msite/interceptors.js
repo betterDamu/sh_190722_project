@@ -15,7 +15,7 @@ axiosObj.interceptors.request.use(function (config) {
 
     //判断出哪些接口是需要携带token
     if(config.headers.needToken){
-        config.headers.Authorization = store.state.token;
+        config.headers.Authorization = store.state.login.token;
     }
     delete config.headers.needToken
 
@@ -28,15 +28,6 @@ axiosObj.interceptors.request.use(function (config) {
 axiosObj.interceptors.response.use(function (response) {
   return response.data;
 }, function (error) {
-    Toast({
-        type:"fail",
-        message:    (error.response&&error.response.data&&error.response.data.message)?
-            error.response.data.message : "错了",
-        duration:4000,
-        onClose(){
-            router.replace("/Login")
-        }
-    })
     return Promise.reject(error);
 });
 

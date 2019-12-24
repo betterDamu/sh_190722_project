@@ -146,11 +146,11 @@ router.get('/auto_login', function(req, res) {
   // 得到请求头中的token
   const token = req.headers['authorization']
   
-  // 如果请求头中没有token, 直接返回
-  if (!token) {
+  // 如果请求头中没有token, 直接返回  token=="null"
+  if (token === "null" || token === "undefined") {
     return res.send({code: 1, msg: '请先登陆'})
   }
-  
+
   // 解码token, 如果失败或过了有效期, 返回401
   const decoded = jwt.decode(token, 'secret')
   if (!decoded || decoded.exp < Date.now() / 1000) {
@@ -171,10 +171,9 @@ router.get('/auto_login', function(req, res) {
  */
 router.get('/position/:geohash', function(req, res) {
   const {geohash} = req.params
-  ajax(`http://cangdu.org:8001/v2/pois/${geohash}`)
-    .then(data => {
+  ajax(`http://cangdu.org:8001/v2/pois/${geohash}`).then(data => {
       res.send({code: 0, data})
-    })
+  })
 })
 
 /*

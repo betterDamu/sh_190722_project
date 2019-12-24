@@ -60,7 +60,11 @@
             ...mapActions(["getShops"])
         },
         computed:{
-            ...mapState(["shops","baseImgUrl"])
+            // ...mapState(["shops","baseImgUrl"])
+            ...mapState({
+                shops: state => state.msite.shops,
+                baseImgUrl: state => state.msite.baseImgUrl
+            })
         },
         components:{
             stars

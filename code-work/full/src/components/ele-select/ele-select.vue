@@ -1,18 +1,21 @@
 <template>
     <div class="ratings-filter">
         <div class="rating-type border-1px">
-      <span class="block">
-        全部<span class="count">1</span>
-      </span>
-            <span class="block active">
-        推荐<span class="count">1</span>
-      </span>
-            <span class="block">
-        吐槽<span class="count">0</span>
-      </span>
+            <span   @click="select(2)"
+                  class="block" :class="{active:selectType===2}">
+                全部<span class="count">{{ratings.length}}</span>
+          </span>
+           <span   @click="select(0)"
+                   class="block" :class="{active:selectType===0}">
+                推荐<span class="count">{{ratings.filter( rating => rating.rateType === 0 ).length}}</span>
+          </span>
+           <span    @click="select(1)"
+                   class="block" :class="{active:selectType===1}">
+                吐槽<span class="count">{{ratings.filter( rating => rating.rateType === 1 ).length}}</span>
+          </span>
         </div>
-        <div class="switch on">
-            <span class="iconfont icon-check_circle"></span>
+        <div class="switch" :class="{on:onlyText}">
+            <span class="iconfont icon-check_circle" @click="switchText"></span>
             <span class="text">只看有内容的评价</span>
         </div>
     </div>
@@ -21,7 +24,18 @@
 
 <script>
     export default {
-        name: "ele-select"
+        name: "ele-select",
+        props:{
+            selectType:Number,
+            onlyText:Boolean,
+            switchText:Function,
+            ratings:Array
+        },
+        methods:{
+            select(type){
+                this.$emit("select",type)
+            }
+        }
     }
 </script>
 

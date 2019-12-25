@@ -27,7 +27,8 @@
 
             <ele-split></ele-split>
 
-            <ele-select></ele-select>
+            <ele-select :selectType="selectType" :onlyText="onlyText" :ratings="ratings"
+                        @select="select" :switchText="switchText"></ele-select>
 
             <div class="rating-wrapper">
                 <ul>
@@ -70,8 +71,8 @@
         data(){
           return {
               ratings:[],
-              selectType:1, // 0:推荐  1:吐槽  2:全部
-              onlyText : false // true: 看只有内容的   false:看全部
+              selectType:0, // 0:推荐  1:吐槽  2:全部
+              onlyText : true // true: 看只有内容的   false:看全部
           }
         },
         computed: {
@@ -79,6 +80,14 @@
                 return this.ratings.filter((rating)=>{
                     return (this.selectType === 2 || rating.rateType ===this.selectType ) && (!this.onlyText || rating.text.length>0 )
                 })
+            }
+        },
+        methods:{
+            select(type){
+                this.selectType = type
+            },
+            switchText(){
+                this.onlyText = !this.onlyText
             }
         },
         components:{

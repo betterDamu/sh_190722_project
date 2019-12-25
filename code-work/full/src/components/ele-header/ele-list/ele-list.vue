@@ -2,7 +2,7 @@
     <ul class="list">
         <li class="item" v-for="support in supports">
             <ele-icon  class="icon" :size="2" :type="support.type"></ele-icon>
-            <span class="text">{{support.content}}</span>
+            <span class="text" :style="{color:color}">{{support.content}}</span>
         </li>
     </ul>
 </template>
@@ -12,7 +12,8 @@
     export default {
         name: "ele-list",
         props:{
-            supports:Array
+            supports:Array,
+            color:String
         },
         components:{
             "ele-icon":icon

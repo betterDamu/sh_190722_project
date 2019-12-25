@@ -10,6 +10,10 @@ import "@/common/stylus/style.styl"
 import "@/common/stylus/transitions.styl"
 import "./validate"
 
+import split from 'components/ele-split/ele-split.vue'
+Vue.component('ele-split', split)
+
+import "./filters/filters"
 
 Vue.prototype.$http = http
 Vue.config.productionTip = false;

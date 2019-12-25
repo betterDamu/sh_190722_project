@@ -18,8 +18,8 @@ VueRouter.prototype.replace = function replace(location) {
 
 const router = new VueRouter({
     routes,
-    linkActiveClass:"active",
-    mode:"history"
+    linkActiveClass:"active"
+    // mode:"history"
 })
 
 //路由守卫(全局前置守卫)
